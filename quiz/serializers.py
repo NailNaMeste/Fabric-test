@@ -1,8 +1,6 @@
-from datetime import datetime
 
-from django.contrib.auth import authenticate
 from rest_framework import serializers
-from .models import Answer, Question, Poll,Choice
+from .models import Answer, Question, Poll, Choice
 
 
 class AnswerSerializer(serializers.ModelSerializer):
@@ -24,6 +22,7 @@ class ChoicePostSerializer(serializers.ModelSerializer):
         model = Choice
         fields = ['pk', 'text', 'question']
 
+
 class QuestionSerializer(serializers.ModelSerializer):
     choices = ChoiceSerializer(many=True, source='choice_set', )
 
@@ -32,9 +31,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         fields = ['pk', 'text', 'choices']
 
 
-
 class PollCreateSerializer(serializers.ModelSerializer):
-    #questions = QuestionSerializer(many=True, source='question_set')
     start_date = serializers.DateTimeField()
 
     class Meta:

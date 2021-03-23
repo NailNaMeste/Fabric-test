@@ -61,8 +61,6 @@ class QuestionCreateAPIView(APIView):
 
 
 class QuestionViewSet(APIView):
-    # renderer_classes = [TemplateHTMLRenderer]
-    # permission_classes = (IsAuthenticated,)
 
     def get(self, request, pid, qid):
         poll = Question.objects.filter(poll=pid).filter(pk=qid)
