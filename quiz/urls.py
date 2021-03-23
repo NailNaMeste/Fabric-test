@@ -9,7 +9,7 @@ from rest_framework_simplejwt.views import (
 from . import views
 
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer, ABC):
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
