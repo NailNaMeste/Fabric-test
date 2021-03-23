@@ -1,4 +1,9 @@
 # Fabric-test
+pip install requerements.txt
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+
     poll/ # GET, POST создать опросы
     GET{}
     POST{  
