@@ -7,7 +7,7 @@ class AnswerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Answer
-        fields = ('pk', 'choice_pk', 'choice_text', 'anon_id')
+        fields = ('pk', 'choice_pk', 'choice_text', 'anon_id', 'question')
 
 
 class ChoiceSerializer(serializers.ModelSerializer):
@@ -40,18 +40,17 @@ class PollCreateSerializer(serializers.ModelSerializer):
 
 
 class PollUpdateSerializer(serializers.ModelSerializer):
-    questions = QuestionSerializer(many=True, source='question_set')
 
     class Meta:
         model = Poll
-        fields = ['pk', 'name', 'description', 'end_date', 'questions']
+        fields = ['pk', 'name', 'description', 'end_date']
 
 
 class QuestionPostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ['pk', 'text', 'poll', 'choice']
+        fields = ['pk', 'text', 'poll']
 
 
 class QuestionPutSerializer(serializers.ModelSerializer):

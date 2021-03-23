@@ -3,7 +3,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, bad_request
 
 from quiz.models import Poll, Question, Choice, Answer
 from quiz.serializers import PollUpdateSerializer, QuestionSerializer, PollCreateSerializer, ChoiceSerializer, \
@@ -73,12 +73,13 @@ class QuestionViewSet(APIView):
         request.data.update({"question": qid})
 
         get_choice = Choice.objects.filter(question=qid)
-        for get_ch in get_choice:
-            if int(get_ch.pk) == int(request.data.get('choice_pk')):
-                request.data.update({'choice_pk': get_ch.pk, 'choice_text': get_ch.text})
-
+        try:
+            for get_ch in get_choice:
+                if int(get_ch.pk) == int(request.data.get('choice_pk')):
+                    request.data.update({'choice_pk': get_ch.pk, 'choice_text': get_ch.text})
+        except TypeError:
+            raise Exception('Bad REquest', 400)
         serializer = AnswerSerializer(data=request.data)
-        print(request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
